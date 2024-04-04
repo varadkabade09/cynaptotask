@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Editor</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <div class="panel">
+        <div class="asset">
+           <div class="as"><h2>Assets</h2></div> 
+        </div>
+
+        <div class="vdopreview">
+           <div class="as1">
+               <img src="images/cursor.png" alt="">
+               <img src="images/hand.png" alt="">
+               <img src="images/crop.png" alt="">
+               <img src="images/zoomin.png" alt="">
+               <img src="images/zoomout.png" alt="">
+           </div> 
+        </div>
+
+    <div class="propertiesDiv">
+        <div class="as"><h2>Properties</h2></div> 
+        <div class="editor-panel">
+            <div class="filter">
+                <div class="options">
+                </div>
+                <div class="slider">
+                    <div class="filter-info">
+                        <p class="name">Brighteness</p>
+                        <p class="value">100%</p>
+                    </div>
+                    <input type="range" value="100" min="0" max="200">
+                </div>
+            </div>
+            <div class="rotate">
+                <label class="title">Rotate & Flip</label>
+                <div class="options">
+                </div>
+            </div>
+        </div>
+        <div class="controls">
+            <button class="reset-filter">Reset Filters</button>
+            <div class="row">
+                <input type="file" class="file-input" accept="image/*" hidden>
+                <button class="choose-img">Choose Video</button>
+                <button class="save-img">Save Video</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="but">
+        <button class="backBtn"><img src="images/rewind.png" alt=""></button>
+        <button class="playpauBtn"><img src="images/play.png" alt=""></button>
+        <button class="forwardBtn"><img src="images/fastforward.png" alt=""></button>
+        <input type="range" value="0" min="0" max="200">
+    </div>
+
+    <div class="track1">
+        <div class="trackitem trackitem1"> Track 1</div>
+        <div class="timeline" id="timeline">
+            <div class="ruler" id="ruler"></div>
+            <div class="frame" id="frame" ></div>
+            <div class="playhead" id="playhead"></div>
+        </div>
+    </div>
+    
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const timeline = document.getElementById("timeline");
+            const playhead = document.getElementById("playhead"); 
+            const ruler = document.getElementById("ruler");
+            const frame = document.getElementById("frame");
+         
+    
+            const totalSeconds = 60; 
+            const pixelsPerSecond = 20;
+    
+            for (let i = 0; i <= totalSeconds; i+=2) {
+                const secondMark = document.createElement("div");
+                secondMark.classList.add("second-mark");
+                secondMark.textContent = i + "s";
+                secondMark.style.left = i * pixelsPerSecond + "px";
+                ruler.appendChild(secondMark);
+    
+            }
+
+            // Initialize playhead position
+            playhead.style.left = "12px";
+
+            // Add event listener for mouse down on playhead
+            playhead.addEventListener("mousedown", startDragging);
+            
+            // Function to handle playhead dragging
+            function startDragging(event) {
+                document.addEventListener("mousemove", drag);
+                document.addEventListener("mouseup", stopDragging);
+            }
+
+            // Function to handle playhead movement
+            function drag(event) {
+                const mouseX = event.clientX;
+                const timelineRect = timeline.getBoundingClientRect();
+                const timelineLeft = timelineRect.left;
+                const timelineWidth = timelineRect.width;
+                const newPosition = mouseX - timelineLeft;
+                if (newPosition >= 0 && newPosition <= timelineWidth) {
+                    playhead.style.left = newPosition + "px";
+                }
+            }
+            // Function to stop dragging
+            function stopDragging(event) {
+                document.removeEventListener("mousemove", drag);
+                document.removeEventListener("mouseup", stopDragging);
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('data2.json')
+            .then(response => response.json())
+            .then(data => {
+                // Generate assets
+                const assetContainer = document.querySelector('.asset');
+                data.assets.forEach(asset => {
+                    const div = document.createElement('div');
+                    div.className = 'vdoasset';
+                    div.innerHTML = `<video src="${asset.src}" muted></video>`;
+                    assetContainer.appendChild(div);
+                });
+
+                const filterContainer = document.querySelector('.filter .options');
+                data.filters.forEach(filter => {
+                    const button = document.createElement('button');
+                    button.id = filter.id;
+                    button.textContent = filter.name;
+                    filterContainer.appendChild(button);
+                });
+
+                const rotateContainer = document.querySelector('.rotate .options');
+                data.rotates.forEach(rotate => {
+                    const button = document.createElement('button');
+                    button.id = rotate.id;
+                    button.innerHTML = `<img src="${rotate.imgSrc}" alt="">`;
+                    rotateContainer.appendChild(button);
+                });
+
+                const vdopreviewContainer = document.querySelector('.vdopreview');
+                const videoPreview = document.createElement('div');
+                videoPreview.className = 'vdopre';
+                videoPreview.innerHTML = `<video src="${data.vdopreview.videoSrc}" id="${data.vdopreview.videoId}" muted></video>`;
+                vdopreviewContainer.appendChild(videoPreview);
+            });
+        });
+    </script>
+</body>
+</html>

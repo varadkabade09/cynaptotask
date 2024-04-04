@@ -1,0 +1,25 @@
+{
+  "assets": [
+    { "src": "images/vdo1.mp4", "id": "vdo1" },
+    { "src": "images/vdo1.mp4", "id": "vdo2" },
+    { "src": "images/vdo1.mp4", "id": "vdo3" },
+    { "src": "images/vdo1.mp4", "id": "vdo4" },
+    { "src": "images/vdo1.mp4", "id": "vdo5" }
+  ],
+  "filters": [
+    { "id": "brightness", "name": "Brightness" },
+    { "id": "saturation", "name": "Saturation" },
+    { "id": "inversion", "name": "Inversion" },
+    { "id": "grayscale", "name": "Grayscale" }
+  ],
+  "rotates": [
+    { "id": "left", "imgSrc": "images/roleft.png" },
+    { "id": "right", "imgSrc": "images/roright.png" },
+    { "id": "horizontal", "imgSrc": "images/refhor.png" },
+    { "id": "vertical", "imgSrc": "images/refver.png" }
+  ],
+  "vdopreview": {
+    "videoSrc": "images/vdo1.mp4",
+    "videoId": "vdopre1"
+  }
+}

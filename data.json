@@ -1,0 +1,17 @@
+{
+  "menu": [
+    {"href": "", "imgSrc": "images/newvdo.png", "alt": "", "text": "NEW VIDEO"},
+    {"href": "", "imgSrc": "images/home.png", "alt": "", "text": "HOME"},
+    {"href": "", "imgSrc": "images/tem.png", "alt": "", "text": "TEMPLATES"},
+    {"href": "", "imgSrc": "images/videos.png", "alt": "", "text": "ALL VIDEOS"}
+  ],
+  "container": [
+    {"href": "index2.html", "imgSrc": "images/vdo.png", "alt": "", "text": "Create Project", "className": "item-1"},
+    {"href": "index2.html", "imgSrc": "images/crt.png", "alt": "", "text": "Record video", "className": "item-2"}
+  ],
+  "recentVideos": [
+    {"videoSrc": "images/vdo1.mp4", "href": "index2.html", "text": "Project 1", "innerHref": "index2.html", "innerText": "Edit", "className": "vdoitem-1"},
+    {"videoSrc": "images/vdo1.mp4", "href": "index2.html", "text": "Project 2", "innerHref": "index2.html", "innerText": "Edit", "className": "vdoitem-2"},
+    {"videoSrc": "images/vdo1.mp4", "href": "index2.html", "text": "Project 3", "innerHref": "index2.html", "innerText": "Edit", "className": "vdoitem-3"}
+  ]
+}

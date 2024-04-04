@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,300;0,400;1,300;1,400&family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <title>Veed Dashboard</title>
+</head>
+<body>  
+  <div class="sidebar">
+    <div class="logo">
+      <img src="images/veed1.png" alt="Company Logo">
+    </div>
+    <ul class="menu" id="menu">
+    </ul>
+  </div>
+
+  <div class="header">
+    <form class="search-bar">
+      <input type="text" placeholder="Search Anything...">
+      <button type="submit"><img src="images/search.png" alt=""></button>
+    </form>
+    <div class="account-circle">
+      <img src="images/vk.jpg" alt="">
+    </div>
+  </div>
+
+  <main>
+    <h3 style="margin-left: 300px;" >Lets create some videos</h3>
+    <div class="container" id="container">
+    </div>
+    
+    <h3 style="margin-left: 300px;">recent videos</h3>
+    
+    <div class="vdo-container" id="vdo-container">
+    </div>
+  </main>
+
+  <script>
+
+    fetch('data.json')
+      .then(response => response.json())
+      .then(data => {
+        const menu = document.getElementById('menu');
+        const container = document.getElementById('container');
+        const vdoContainer = document.getElementById('vdo-container');
+        
+        data.menu.forEach(item => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          const img = document.createElement('img');
+          const p = document.createElement('p');
+          
+          a.href = item.href;
+          img.src = item.imgSrc;
+          img.alt = item.alt;
+          p.textContent = item.text;
+          
+          a.appendChild(img);
+          a.appendChild(p);
+          li.appendChild(a);
+          menu.appendChild(li);
+        });
+        
+        data.container.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'item ' + item.className;
+          const a = document.createElement('a');
+          a.href = item.href;
+          const img = document.createElement('img');
+          img.src = item.imgSrc;
+          img.alt = item.alt;
+          const p = document.createElement('p');
+          p.textContent = item.text;
+          
+          a.appendChild(img);
+          a.appendChild(p);
+          div.appendChild(a);
+          container.appendChild(div);
+        });
+        
+        data.recentVideos.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'vdoitem ' + item.className;
+          const video = document.createElement('video');
+          video.src = item.videoSrc;
+          video.muted = true;
+          video.controls = true;
+          const a = document.createElement('a');
+          a.href = item.href;
+          const p = document.createElement('p');
+          p.textContent = item.text;
+          const innerDiv = document.createElement('div');
+          const innerA = document.createElement('a');
+          innerA.href = item.innerHref;
+          const h3 = document.createElement('h3');
+          h3.className = 'content';
+          h3.textContent = item.innerText;
+          
+          innerA.appendChild(h3);
+          innerDiv.appendChild(innerA);
+          a.appendChild(p);
+          div.appendChild(video);
+          div.appendChild(a);
+          div.appendChild(innerDiv);
+          vdoContainer.appendChild(div);
+        });
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  </script>
+</body>
+</html>
